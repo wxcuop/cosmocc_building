@@ -28,7 +28,7 @@ jobs:
       run: |
         mkdir -p cosmocc
         cd cosmocc
-        wget https://justine.lol/cosmocc/cosmocc.zip
+        wget https://cosmo.zip/pub/cosmocc/cosmocc.zip
         unzip cosmocc.zip
 
     - name: Set environment variables
