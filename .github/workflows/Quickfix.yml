@@ -35,13 +35,13 @@ jobs:
 
     - name: Set environment variables
       run: |
-        echo "CC=$(pwd)/cosmocc/cosmocc" >> $GITHUB_ENV
-        echo "CXX=$(pwd)/cosmocc/cosmoc++" >> $GITHUB_ENV
+        echo "CC=$(pwd)/bin/cosmocc" >> $GITHUB_ENV
+        echo "CXX=$(pwd)/bin/cosmoc++" >> $GITHUB_ENV
 
     - name: Verify compiler installation
       run: |
-        $(pwd)/cosmocc/cosmocc --version
-        $(pwd)/cosmocc/cosmoc++ --version
+        $(pwd)/bin/cosmocc --version
+        $(pwd)/bin/cosmoc++ --version
 
     - name: Build QuickFIX
       run: |
