@@ -1,0 +1,39 @@
+
+# .github/workflows/build.yml
+
+name: Build QuickFIX with Cosmopolitan Libc
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Cosmopolitan Libc
+      run: |
+        mkdir -p cosmocc
+        cd cosmocc
+        wget https://cosmo.zip/pub/cosmocc/cosmocc.zip
+        unzip cosmocc.zip
+
+    - name: Set environment variables
+      run: |
+        echo "CC=x86_64-unknown-cosmo-cc" >> $GITHUB_ENV
+        echo "CXX=x86_64-unknown-cosmo-c++" >> $GITHUB_ENV
+
+    - name: Build QuickFIX
+      run: |
+        ./bootstrap
+        ./configure --prefix=/opt/cosmos/x86_64
+        make -j
+        make install
