@@ -1,11 +1,8 @@
 
-# .github/workflows/build.yml
-
 name: Build QuickFIX with Cosmopolitan Libc
 
 on:
     workflow_dispatch:
-  
 
 jobs:
   build:
@@ -14,6 +11,12 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
+
+    - name: Checkout QuickFIX
+      run: |
+        git clone https://github.com/quickfix/quickfix.git
+        cd quickfix
+        git checkout master
 
     - name: Set up Cosmopolitan Libc
       run: |
@@ -24,11 +27,12 @@ jobs:
 
     - name: Set environment variables
       run: |
-        echo "CC=x86_64-unknown-cosmo-cc" >> $GITHUB_ENV
-        echo "CXX=x86_64-unknown-cosmo-c++" >> $GITHUB_ENV
+        echo "CC=$(pwd)/cosmocc/cosmocc" >> $GITHUB_ENV
+        echo "CXX=$(pwd)/cosmocc/cosmoc++" >> $GITHUB_ENV
 
     - name: Build QuickFIX
       run: |
+        cd quickfix
         ./bootstrap
         ./configure --prefix=/opt/cosmos/x86_64
         make -j
