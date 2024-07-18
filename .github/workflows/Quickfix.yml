@@ -26,6 +26,7 @@ jobs:
 
     - name: Set up Cosmopolitan Libc
       run: |
+        pwd
         mkdir -p cosmocc
         cd cosmocc
         wget https://cosmo.zip/pub/cosmocc/cosmocc.zip
@@ -35,13 +36,13 @@ jobs:
 
     - name: Set environment variables
       run: |
-        echo "CC=$(pwd)/bin/cosmocc" >> $GITHUB_ENV
-        echo "CXX=$(pwd)/bin/cosmoc++" >> $GITHUB_ENV
+        echo "CC=$(pwd)/cosmocc/bin/cosmocc" >> $GITHUB_ENV
+        echo "CXX=$(pwd)/cosmocc/bin/cosmoc++" >> $GITHUB_ENV
 
     - name: Verify compiler installation
       run: |
-        $(pwd)/bin/cosmocc --version
-        $(pwd)/bin/cosmoc++ --version
+        $(pwd)/cosmocc/bin/cosmocc --version
+        $(pwd)/cosmocc/bin/cosmoc++ --version
 
     - name: Build QuickFIX
       run: |
